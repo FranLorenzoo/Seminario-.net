@@ -1,0 +1,7 @@
+string matrimoño = "hola como estas";
+
+string[] st=matrimoño.Split(' ');
+foreach (string s in st)
+{
+    Console.WriteLine(s);
+}
