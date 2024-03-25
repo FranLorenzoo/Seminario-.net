@@ -1,0 +1,239 @@
+static void ejer1()
+{
+    Console.CursorVisible = false;
+    ConsoleKeyInfo k = Console.ReadKey(true);
+    while (k.Key != ConsoleKey.End)
+    {
+        Console.Clear();
+        Console.Write($"{k.Modifiers}-{k.Key}-{k.KeyChar}");
+        k = Console.ReadKey(true);
+    }
+}
+
+static void imprimirMatriz(double[,] matriz)
+{
+    for(int i = 0; i < matriz.GetLength(0); i++)
+    {
+        Console.WriteLine("_______");
+        for(int j = 0; j < matriz.GetLength(1); j++)
+        {
+            Console.Write("|");
+            
+            Console.Write(matriz[i, j]);
+        }
+        Console.Write("|");
+        Console.WriteLine();
+    }
+    Console.WriteLine("_______") ;
+}
+
+static void ImprimirMatrizConFormato(double[,] matriz, string formatString)
+{
+    for (int i = 0; i < matriz.GetLength(0); i++)
+    {
+        Console.WriteLine("_______");
+        for (int j = 0; j < matriz.GetLength(1); j++)
+        {
+            Console.Write("|");
+            Console.Write($"elemento = {matriz[i, j].ToString(formatString)}");
+        }
+        Console.Write("|");
+        Console.WriteLine();
+    }
+    Console.WriteLine("_______");
+}
+
+static double[] GetDiagonalPrincipal(double[,] matriz)
+{
+   double[] diagonalPrinci = new double[matriz.GetLength(0)];
+   for (int i = 0; i < matriz.GetLength(0); i++)
+   {
+        diagonalPrinci[i] = matriz[i,i];
+   }
+   return diagonalPrinci;
+}
+static double[] GetDiagonalSecundaria(double[,] matriz)
+{
+    int j = 0;
+    double[] diagonalPrinci = new double[matriz.GetLength(0)];
+    for (int i = matriz.GetLength(0)-1; i > 0; i--)
+    {
+        diagonalPrinci[j] = matriz[i, i];
+        j++;
+    }
+    return diagonalPrinci;
+}
+static double[][] GetArregloDeArreglo(double[,] matriz)
+{
+    double[][] retorno = new double[matriz.GetLength(0)][];
+    for (int i = 0; i < matriz.GetLength(0); i++)
+    {
+        retorno[i]= new double[matriz.GetLength(0)];
+        for (int j = 0; j < matriz.GetLength(1); j++)
+        {
+            retorno[i][j] = matriz[i, j];
+        }
+    }
+    return retorno;
+}
+
+static double[,]? Suma(double[,] A, double[,] B)
+{
+    if (A.GetLength(0) == B.GetLength(0) && A.GetLength(1) == B.GetLength(1))
+    {
+        double[,] retorno = new double[A.GetLength(0), A.GetLength(1)];
+        for (int i = 0; i < A.GetLength(0); i++)
+        {
+            for (int j = 0; j < A.GetLength(1); j++)
+            {
+                retorno[i, j] = A[i, j] + B[i, j];
+            }
+        }
+        return retorno;
+    }
+    else return null;
+}
+static double[,]? Resta(double[,] A, double[,] B)
+{
+    if (A.GetLength(0) == B.GetLength(0) && A.GetLength(1) == B.GetLength(1))
+    {
+        double[,] retorno = new double[A.GetLength(0), A.GetLength(1)];
+        for (int i = 0; i < A.GetLength(0); i++)
+        {
+            for (int j = 0; j < A.GetLength(1); j++)
+            {
+                retorno[i, j] = A[i, j] * B[i, j];
+            }
+        }
+        return retorno;
+    }
+    else return null;
+}
+static double[,] Multiplicacion(double[,] A, double[,] B)
+{
+    int DFF = (A.GetLength(0) > B.GetLength(0)) ? A.GetLength(0) : B.GetLength(0);
+    int recorrerF = (A.GetLength(0) < B.GetLength(0)) ? A.GetLength(0) : B.GetLength(0);
+    int DFL = (A.GetLength(1) > B.GetLength(1)) ? A.GetLength(1) : B.GetLength(1);
+    int recorrerL = (A.GetLength(1) < B.GetLength(1)) ? A.GetLength(1) : B.GetLength(1);
+    double[,] retorno = new double[DFF, DFL];
+    for (int i = 0; i < recorrerF; i++)
+    {
+        for (int j = 0; j < recorrerL; j++)
+        {
+            retorno[i, j] = A[i, j] * B[i, j];
+        }
+    }
+    return retorno;
+}
+
+static void ejer7()
+{
+    int i = 10;
+    var x = i * 1.0;
+    var y = 1f;
+    var z = i * y;
+    Console.WriteLine("tipo de variable x: {0} | tipo variable y: {1} | tipo de variable z: {2}", x.GetType(), y.GetType(), z.GetType());
+}
+static void ejer8()
+{
+    //object[] obj = new int[10];//no se puede asignar un tipo distino por mas que sea object
+    dynamic dyna = 13;
+    //Console.WriteLine(obj.Length);
+    Console.WriteLine(dyna.Length);//no existe el metodo para int
+}
+
+	static void ejer9()
+	{
+            var a = 3L;
+            dynamic b = 32;
+            object obj = 3;
+            //a = a * 2L; no se puede pasar el tipo Long a double y tampoco es casteable
+            b = b * 2.0;
+            b = "hola";
+            obj = b;
+            b = b + 11;
+            //obj = (int)obj + 11; se debe castear obj ya que es un string
+            var c = new { Nombre = "Juan" };
+            var d = new { Nombre = "María" };
+            var e = new { Nombre = "Maria", Edad = 20 };
+            var f = new { Edad = 20, Nombre = "Maria" };
+            //f.Edad = 22;//readOnly
+            d = c;
+            //e = d; idem
+            //f = e;distintas estrucuras
+        }
+
+        static void ejer11()
+        {
+            List<int> a = [1, 2, 3, 4];
+            a.Remove(5);//no existe el index pero no ocasiona error, devuelve false;
+            a.RemoveAt(4);//tira excepcion ya que el index esta afuera de la estructura;
+        }
+
+        static void ejer12(string cadena)
+        {
+            int apertura = 0;
+            int cierre = 0;
+            Stack<char> caracteres = new Stack<char>();
+            for (int i = 0; i < cadena.Length; i++)
+            {
+                if (cadena[i] == '(')
+                {
+                    caracteres.Push(cadena[i]);
+                    apertura++;
+                }else if (cadena[i]!=')')caracteres.Push(cadena[i]); 
+                if (cadena[i] == ')' & apertura > cierre)
+                {
+                    cierre++;
+                    while (caracteres.Peek()!='(') caracteres.Pop();
+                    cierre--;
+                    apertura--;
+                }else if (apertura == cierre)
+                {
+                    Console.WriteLine("Cadena Invalida");
+                    return;
+                }
+            }
+            
+        }
+
+        static string ConvertidorBase(int Base, int num)
+        {
+            string ret = "";
+            while ((num / Base)>= Base){
+                int rest=num % Base;
+                ret.Insert(0, rest.ToString());
+                num /= Base;
+            }
+            if(num < 3 & num>0 ) ret.Insert(0,num.ToString());
+            return ret;
+        }
+
+        static Queue<int> Cifrar (Queue<int>clave, Queue<int> mensaje)
+        {
+            do
+            {
+                int cla = clave.Dequeue();
+                int mensj = mensaje.Dequeue();
+                mensj += cla;
+                if (mensj > 28) mensj -= 28;
+                clave.Enqueue(cla);
+                mensaje.Enqueue(mensj);
+            } while (mensaje.Last() != mensaje.Peek());
+
+            return mensaje;
+        }
+        static Queue<int> Descifrar(Queue<int> clave, Queue<int> mensaje)
+        {
+            do
+            {
+                int cla = clave.Dequeue();
+                int mensj = mensaje.Dequeue();
+                mensj -= cla;
+                if (mensj <= 0) mensj = 28 - mensj;
+                clave.Enqueue(cla);
+                mensaje.Enqueue(mensj);
+            } while (mensaje.Last() != mensaje.Peek());
+
+            return mensaje;
+        }
