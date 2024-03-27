@@ -1,0 +1,245 @@
+class Persona
+{
+    private string? Nombre;
+    private int Edad { get; set; }
+    private int DNI;
+
+    public Persona (string? Nombre, int Edad, int dni)
+    {
+        this.Nombre = Nombre;
+        this.Edad = Edad;
+        this.DNI = dni;
+    }
+    public Persona() { }
+    public string obtenerPersona()
+    {
+        return $"{Nombre} {Edad} {DNI}";
+    }
+
+
+    public bool EsMayorQue(Persona P)
+    {
+
+        return (this.Edad >= P.Edad)? true : false;
+    }
+}
+class Cuenta
+{
+    private double _monto;
+    private int _titularDNI;
+    private string? _titularNobre;
+    public Cuenta (int D)
+    {
+        this._titularNobre = "no especificado";
+        this._monto = 0;
+        this._titularDNI = D;
+    }
+
+    public Cuenta(string? N)
+    {
+        this._titularNobre = N;
+        this._monto = 0;
+        this._titularDNI = 0;
+    }
+    public Cuenta ()
+    {
+        this._titularNobre = "no especificado";
+        this._monto = 0;
+        this._titularDNI = 0;
+    }
+
+    public string Imprimir()
+    {
+        string ns = "no especificado";
+        return $"Nombre: {_titularNobre} | DNI: {((_titularDNI == 0)? ns : _titularDNI)} | monto: {_monto}";
+    }
+    public void depositar (double d)
+    {
+        this._monto += d;
+    }
+    public void extraer (int d) 
+    {
+        if (this._monto > d)
+        {
+            this._monto -= d;
+        }
+        else Console.WriteLine("Operación cancelada, monto insuficiente");
+    }
+}
+
+class Matriz
+{
+    private double[,] matriz;
+    public Matriz(int filas, int columnas)
+    {
+        this.matriz = new double[filas, columnas];
+    }
+    public Matriz(double[,] matriz)
+    {
+        this.matriz = matriz; 
+    }
+    public void SetElemento(int fila, int columna, double elemento)
+    {
+        this.matriz[fila, columna] = elemento;
+    }
+    public double GetElemento(int fila, int columna)
+    {
+        return this.matriz[fila, columna];
+    }
+    public void imprimir()
+    {
+        
+        foreach (double d in matriz)
+        {
+            Console.Write(d);
+        }   
+    }
+    public void imprimir(string formatString)
+    {
+        foreach (double d in matriz)
+        {
+            Console.Write($"{d:formatString}");
+        }
+    }
+    public double[] GetFila(int fila)
+    {
+        double[] ret = new double[fila];
+        for (int i = 0; i< matriz.GetLength(1); i++)
+        {
+            ret[i]= matriz[fila,i];
+        }
+        return ret;
+    }
+    public double[] GetColumna(int columna)
+    {
+        double[] ret = new double[columna];
+        for (int i = 0; i < matriz.GetLength(0); i++)
+        {
+            ret[i] = matriz[columna, i];
+        }
+        return ret;
+    }
+    public double[] GetDiagonalPrincipal()
+    {
+        double[] diagonalPrinci = new double[matriz.GetLength(0)];
+        for (int i = 0; i < matriz.GetLength(0); i++)
+        {
+            diagonalPrinci[i] = matriz[i, i];
+        }
+        return diagonalPrinci;
+    }
+    public double[] GetDiagonalSecundaria()
+    {
+        int j = 0;
+        double[] diagonalPrinci = new double[matriz.GetLength(0)];
+        for (int i = matriz.GetLength(0) - 1; i > 0; i--)
+        {
+            diagonalPrinci[j] = matriz[i, i];
+            j++;
+        }
+        return diagonalPrinci;
+    }
+    public double[][] getArregloDeArreglo()
+    {
+        double[][] retorno = new double[matriz.GetLength(0)][];
+        for (int i = 0; i < matriz.GetLength(0); i++)
+        {
+            retorno[i] = new double[matriz.GetLength(0)];
+            for (int j = 0; j < matriz.GetLength(1); j++)
+            {
+                retorno[i][j] = matriz[i, j];
+            }
+        }
+        return retorno;
+    }
+    public void sumarle(Matriz m) {
+        for (int i = 0; i < matriz.GetLength(0); i++)
+        {
+            for (int j = 0; j < matriz.GetLength(1); j++)
+            {
+                matriz[i, j]+= m.GetElemento(i,j);
+            }
+        }
+    }
+    public void restarle(Matriz m)
+    {
+        for (int i = 0; i < matriz.GetLength(0); i++)
+        {
+            for (int j = 0; j < matriz.GetLength(1); j++)
+            {
+                matriz[i, j] -= m.GetElemento(i, j);
+            }
+        }
+    }
+    public void multiplicarPor(Matriz m)
+    {
+        for (int i = 0; i < matriz.GetLength(0); i++)
+        {
+            for (int j = 0; j < matriz.GetLength(1); j++)
+            {
+                matriz[i, j] *= m.GetElemento(i, j);
+            }
+        }
+    }
+}
+
+class Ecuacion
+{
+    private double a;
+    private double b;
+    private double c;
+
+    public Ecuacion (double a, double b, double c)
+    {
+        this.a = a;
+        this.b = b;
+        this.c = c;
+    }
+
+    public double getDiscriminante()
+    {
+        return ((Math.Pow(b, 2)) - 4 * a * c);
+    }
+
+    public int getCantidadRaices() 
+    {
+        if (this.getDiscriminante() == 0) return 1;
+        else return (this.getDiscriminante() < 0) ? 0 : 2;
+    }
+
+    public string getRaices()
+    {
+        
+        return "";
+    }
+}
+
+class Hora
+{
+    private int horas;
+    private int minutos;
+    private double segundos;
+
+    public Hora (int horas, int min, double seg)
+    {
+        this.horas = horas;
+        this.minutos = min;
+        this.segundos = seg;
+    }
+
+    public Hora (double num)
+    {
+        double h= num%100;
+        this.horas = h;
+        num /= 100;
+        num = (num * 60) / 100;
+        h = num % 100;
+        minutos = h;
+        segundos = num % 100;
+    }
+    public string Imprimir()
+    {
+        return $"{horas} horas, {minutos} minutos, {segundos} segundos.";
+    }
+}
+

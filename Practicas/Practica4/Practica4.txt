@@ -1,0 +1,25 @@
+ejerConClasePersona: 
+	using practica4;
+
+
+	Persona P= new Persona();
+
+	string path = @"C:\Users\usuario\Desktop\Fran\2024 FACULTAD\SEMINARIO.NET\practica4\aaa.txt";
+
+
+	StreamReader reader = new StreamReader(path);
+
+	Console.WriteLine("Nombre Edad DNI");
+	Console.WriteLine();
+	while (!reader.EndOfStream)
+	{
+    		P.Nombre = reader.ReadLine() ?? "indefinido";
+    		P.DNI = Convert.ToInt32(reader.ReadLine());
+    		P.Edad = Convert.ToInt32(reader.ReadLine());
+    		Console.WriteLine(P.obtenerPersona());
+	}
+
+	reader.Close();
+
+
+
